@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .stopwatch {
+            width: 200px;
+            height: 200px;
+            background-color:darkgrey;
+            text-align: center;
+            border: 3px solid black;
+        }
+
+        #display {
+            margin-left: auto;
+            margin-right: auto;            
+            margin-bottom: 15%;
+            margin-top: 15%;
+            background-color: rgb(255, 255, 255);
+            height: 20%;
+            width: 90%;
+            border: 3px solid rgb(129, 12, 35);
+            border-radius: 5px;
+            font-size: xx-large;
+        }
+         h1 {
+            padding-top: 10px;
+         }
+    </style>
+</head>
+<body>
+    <div class="stopwatch">
+        <h1>Stopwatch</h1>
+        <div id="display">00:00:00</div>
+        <div class="knoppen">
+            <button onclick="fStop()">Stop</button>
+            <button type="submit" id="start">Start</button>
+            <button onclick="fReset()">Reset</button>
+        </div>
+    </div>
+    <script>
+        let msec = 0;
+        let sec = 0;
+        let min = 0;
+        let mijnInterval = '';
+        
+        function startTimer() {
+            mijnInterval = setInterval(secTeller, 10);
+        }
+
+        function fStop() {
+            clearInterval(mijnInterval);
+        }
+
+        function fReset() {
+            msec = 0;
+            sec = 0;
+            min = 0;
+            document.getElementById('display').innerHTML = min + "0:0" + sec + ":0" + msec;
+        }
+
+        function secTeller() {
+            msec = msec + 1;
+            if (msec > 99) {
+                msec = 0;
+                sec = sec + 1;
+                if (sec > 59) {
+                    sec = 0;
+                    min = min + 1;
+                }
+            }
+            let msecOut = ("0" + msec).slice(-2);
+            let secOut = ("0" + sec).slice(-2);
+            let minOut = ("0" + min).slice(-2);
+            document.getElementById('display').innerHTML = minOut + ":" + secOut + ":" + msecOut;
+        }
+
+
+
+        document.getElementById('start').addEventListener('click', startTimer);
+        
+    </script>
+</body>
+</html>
