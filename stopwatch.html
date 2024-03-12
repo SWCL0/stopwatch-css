@@ -5,49 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        .stopwatch-achtergrond {
+            background-image: url("css17_A.png");
+            top: 0;
+            left: 0;
+            height: 736px;
+            width: 735px;
+        }
+
         .stopwatch {
-            width: 200px;
-            height: 200px;
-            background-color:darkgrey;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
             text-align: center;
-            border: 3px solid black;
+            height: 735px;
+            width: 730px;
         }
 
         #display {
-            margin-left: auto;
-            margin-right: auto;            
-            margin-bottom: 15%;
-            margin-top: 15%;
-            background-color: rgb(255, 255, 255);
-            height: 20%;
-            width: 90%;
-            border: 3px solid rgb(129, 12, 35);
-            border-radius: 5px;
-            font-size: xx-large;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            background-color: rgb(79, 80, 80, 1);
+            height: 34%;
+            width: 70%;
+            border: 5px solid rgb(220, 199, 93);
+            border-radius: 15px;
+            font-size: 700%;
         }
-         h1 {
-            padding-top: 10px;
-         }
+            
+        .knoppen-behuizing {
+            position: absolute;
+            display: inline-block;
+            left: 180px;
+            bottom: 580px;
+            height: 100px;
+            width: 390px;
+        }
+
+        button {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            width: 32%;
+            background: transparent;
+            border: none;
+        }
+
+        @font-face {
+            font-family: digitaleKlok;
+            src: url(Digital\ Dismay.otf);
+        }
+        #tijd {
+            font-family: digitaleKlok;
+            color: black;
+        }
     </style>
 </head>
 <body>
-    <div class="stopwatch">
-        <h1>Stopwatch</h1>
-        <div id="display">00:00:00</div>
-        <div class="knoppen">
-            <button onclick="fStop()">Stop</button>
-            <button type="submit" id="start">Start</button>
-            <button onclick="fReset()">Reset</button>
+    <div class="stopwatch-achtergrond">
+        <div class="stopwatch">
+            <div id="display"><p id="tijd">00:00:00</p></div>
+            <div class="knoppen-behuizing">
+                <div class="knoppen">
+                    <button onclick="fReset()"></button>
+                    <button type="submit" id="start" onclick="fStop()"></button>
+                    <button onclick="fLight()"></button>
+                </div>                
+            </div>
+
         </div>
     </div>
     <script>
+        let y = 0;
+        let i = 0;
         let msec = 0;
         let sec = 0;
         let min = 0;
         let mijnInterval = '';
         
         function startTimer() {
-            mijnInterval = setInterval(secTeller, 10);
+            if (i > 0) {
+                fStop();
+                i--;
+            } else {
+                mijnInterval = setInterval(secTeller, 10);
+                i++;
+            }
         }
 
         function fStop() {
@@ -58,7 +103,7 @@
             msec = 0;
             sec = 0;
             min = 0;
-            document.getElementById('display').innerHTML = min + "0:0" + sec + ":0" + msec;
+            document.getElementById('tijd').innerHTML = min + "0:0" + sec + ":0" + msec;
         }
 
         function secTeller() {
@@ -74,10 +119,18 @@
             let msecOut = ("0" + msec).slice(-2);
             let secOut = ("0" + sec).slice(-2);
             let minOut = ("0" + min).slice(-2);
-            document.getElementById('display').innerHTML = minOut + ":" + secOut + ":" + msecOut;
+            document.getElementById('tijd').innerHTML = minOut + ":" + secOut + ":" + msecOut;
         }
 
-
+        function fLight() {
+            if (y > 0) {
+                document.getElementById("display").style.backgroundColor = "rgb(79, 80, 80, 1)";
+                y--;
+            } else {
+                document.getElementById("display").style.backgroundColor = "rgb(39, 111, 111, 1)";
+                y++;
+            }
+        }
 
         document.getElementById('start').addEventListener('click', startTimer);
         
